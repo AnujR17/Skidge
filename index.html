@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skidge</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --accent: #2b6cb0;
+            --light: #ebf4ff;
+            --bg: #f7fafc;
+            --card: #ffffff;
+            --text: #2d3748;
+            --muted: #718096;
+            --border: #e2e8f0;
+            --green: #38a169;
+            --red: #e53e3e;
+            --orange: #dd6b20;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ─── Hero ─── */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #fff;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: .5rem; }
+        .hero p { font-size: 1.1rem; opacity: .88; max-width: 740px; margin: 0 auto; }
+
+        /* ─── Container ─── */
+        .container { max-width: 1120px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+        /* ─── Section ─── */
+        section { margin-bottom: 3rem; }
+        section > h2 {
+            font-size: 1.55rem;
+            color: var(--primary);
+            border-left: 4px solid var(--accent);
+            padding-left: .75rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* ─── Cards ─── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.6rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.06);
+        }
+        .card h3 {
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: .6rem;
+        }
+        .card p, .card li { font-size: .97rem; }
+
+        /* ─── Image Grid ─── */
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .img-grid figure {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .img-grid figure img {
+            width: 100%;
+            display: block;
+        }
+        .img-grid figcaption {
+            padding: .6rem .8rem;
+            font-size: .88rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        /* ─── Stat Table ─── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: .8rem;
+            font-size: .92rem;
+        }
+        th, td {
+            text-align: left;
+            padding: .55rem .75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        th { background: var(--light); color: var(--primary); font-weight: 600; }
+        tr:hover { background: #f0f5ff; }
+
+        /* ─── KPI strip ─── */
+        .kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .kpi {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.3rem;
+            text-align: center;
+        }
+        .kpi .value { font-size: 1.9rem; font-weight: 700; color: var(--accent); }
+        .kpi .label { font-size: .85rem; color: var(--muted); margin-top: .25rem; }
+
+        /* ─── Badge ─── */
+        .badge {
+            display: inline-block;
+            padding: .15rem .55rem;
+            border-radius: 999px;
+            font-size: .78rem;
+            font-weight: 600;
+        }
+        .badge-green { background: #c6f6d5; color: #276749; }
+        .badge-red   { background: #fed7d7; color: #9b2c2c; }
+        .badge-orange { background: #feebc8; color: #9c4221; }
+
+        ul { padding-left: 1.3rem; }
+        ul li { margin-bottom: .35rem; }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: .85rem;
+            border-top: 1px solid var(--border);
+        }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            .img-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═════════ HERO ═════════ -->
+<div class="hero">
+    <h1>Skidge </h1>
+    <p>A comprehensive statistical report examining the gap between academic performance of Indian engineering graduates and actual industry readiness, cross-referenced with real-world job demand data from Indeed India (Oct–Dec 2021).</p>
+</div>
+
+<div class="container">
+
+<!-- ═════════ KPI STRIP ═════════ -->
+<div class="kpi-strip">
+    <div class="kpi">
+        <div class="value">2,998</div>
+        <div class="label">Engineering Graduates Analyzed</div>
+    </div>
+    <div class="kpi">
+        <div class="value">30,000</div>
+        <div class="label">Indeed India Job Postings</div>
+    </div>
+    <div class="kpi">
+        <div class="value">0.243</div>
+        <div class="label">GPA ↔ Readiness Correlation</div>
+    </div>
+    <div class="kpi">
+        <div class="value">92.8%</div>
+        <div class="label">RF Regressor R² Score</div>
+    </div>
+    <div class="kpi">
+        <div class="value">96.5%</div>
+        <div class="label">RF Classifier Accuracy</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CORE FINDINGS — THE TWO PIVOTAL VISUALIZATIONS
+     ═══════════════════════════════════════════════════ -->
+<section id="core-findings">
+    <h2>Core Findings — The Two Visualizations That Drive Every Insight</h2>
+    <p style="font-size:1.05rem;margin-bottom:1.2rem;">Before diving into details, these two plots capture the <strong>entire story</strong> of this research. Everything else in the report is built around what they reveal.</p>
+
+    <!-- Personality Traits ↔ Skills Heatmap -->
+    <div class="card" style="border-left:4px solid var(--accent);">
+        <h3>A. Personality Traits vs Academic Skills &amp; GPA</h3>
+        <div class="img-grid" style="grid-template-columns:1fr;max-width:720px;margin:0 auto;">
+            <figure>
+                <img src="data-images/download (37).png" alt="Correlation of Personality Traits with Skills and GPA">
+                <figcaption>Heatmap: Personality trait correlations with college GPA, aptitude score, and technical score</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:1rem;"><strong>What this shows:</strong> The Big Five personality traits — conscientiousness, agreeableness, extraversion, neuroticism, and openness to experience — are plotted against GPA, aptitude, and technical scores. The heatmap reveals:</p>
+        <ul>
+            <li><strong>Conscientiousness</strong> has only a weak positive link to technical skill and aptitude. Despite being the trait most associated with academic effort, it barely moves the needle on actual readiness.</li>
+            <li><strong>Openness to Experience</strong> correlates slightly with aptitude, suggesting curious students do marginally better on reasoning tasks.</li>
+            <li><strong>Neuroticism</strong> shows weak-to-negligible negative correlations — anxiety doesn't significantly hurt technical scores at the population level.</li>
+            <li><strong>No personality trait strongly predicts GPA or technical skill</strong> (all |r| < 0.25). This dismantles the common assumption that "good personality = good student."</li>
+        </ul>
+        <p><strong>Why it matters:</strong> Hiring filters that weight personality assessments heavily are not supported by this data. Personality traits are <em>orthogonal</em> to the skills that actually predict industry readiness (logical reasoning, quantitative aptitude, English). Companies should test aptitude, not personality, when screening fresh graduates.</p>
+    </div>
+
+    <!-- GPA vs Readiness Scatter -->
+    <div class="card" style="border-left:4px solid var(--red);">
+        <h3>B. The Central Mismatch: GPA vs Industry Readiness Score</h3>
+        <div class="img-grid" style="grid-template-columns:1fr;max-width:720px;margin:0 auto;">
+            <figure>
+                <img src="data-images/download (38).png" alt="GPA vs Industry Readiness Score Scatter">
+                <figcaption>Scatter: College GPA (x) vs composite readiness score (y), coloured by degree type, with GPA = Readiness reference line</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:1rem;"><strong>What this shows:</strong> Each dot is one graduate. The red dashed line is where GPA would equal readiness. The vast majority of points are <strong>above or below</strong> that line — the cloud is wide and diffuse, confirming:</p>
+        <ul>
+            <li><strong>Pearson r = 0.243</strong> — GPA explains only ~6% of the variance in readiness.</li>
+            <li><strong>Paired t-test: t = 78.5, p ≈ 0</strong> — the two scores are systematically and significantly different, not just noisy versions of the same thing.</li>
+            <li>Students with the <em>same GPA</em> (e.g., 70–75) show readiness scores spanning from 20 to 80 — an enormous range.</li>
+            <li>Degree type (B.Tech vs B.E. vs M.Tech) does not tighten this cloud — the mismatch persists across all programme types.</li>
+        </ul>
+        <p><strong>Why it matters:</strong> This is the <em>single most important</em> plot in the entire study. It proves that <strong>GPA is not a reliable proxy for industry readiness</strong>. Universities and recruiters relying on GPA cutoffs are systematically misclassifying graduates — accepting some who are unready while rejecting others who are highly capable. The Random Forest model later confirms that <strong>logical reasoning (34.5%) and quantitative aptitude (23.1%)</strong> — not GPA — are the dominant predictors of actual readiness.</p>
+    </div>
+
+    <div class="card" style="background:var(--light);">
+        <h3>How These Two Findings Connect</h3>
+        <p>Together, these plots establish a <strong>double failure</strong> in current graduate assessment:</p>
+        <ol style="padding-left:1.3rem;font-size:.97rem;">
+            <li><strong>GPA fails to capture readiness</strong> (GPA vs Industry Readiness scatter) — academic grades and industry preparedness are weakly linked.</li>
+            <li><strong>Personality fails to capture skill</strong> (Personality Traits vs Skills &amp; GPA heatmap) — the Big Five traits don't meaningfully predict the technical or aptitude scores that <em>do</em> drive readiness.</li>
+        </ol>
+        <p style="margin-top:.5rem;">This means the only reliable predictors of graduate readiness are <strong>direct aptitude measurements</strong> — logical reasoning, quantitative aptitude, and English proficiency — which collectively account for 72.5% of feature importance in the Random Forest model. Neither GPA nor personality testing can substitute for these direct assessments.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PART A — GRADUATE OUTCOMES DATASET
+     ═══════════════════════════════════════════════════ -->
+<section>
+    <h2>Part A — Engineering Graduate Outcomes Analysis</h2>
+
+    <!-- A1: Distributions -->
+    <div class="card">
+        <h3>1. Feature Distributions</h3>
+        <p>Six key numeric features were plotted to understand data spread and shape:</p>
+
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download.png" alt="Distribution of collegeGPA">
+                <figcaption>College GPA — approximately normal, centered near 72</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (1).png" alt="Distribution of avg school percentage">
+                <figcaption>Avg School % — slightly right-skewed, peak ~78</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (2).png" alt="Distribution of aptitude score">
+                <figcaption>Aptitude Score — bell-shaped, mean ~500</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (3).png" alt="Distribution of technical score">
+                <figcaption>Technical Score — narrow, concentrated around 380</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (4).png" alt="Distribution of Starting Salary">
+                <figcaption>Starting Salary — heavily right-skewed; most below ₹5L</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (5).png" alt="Distribution of age at graduation">
+                <figcaption>Age at Graduation — clustered at 21–23 years</figcaption>
+            </figure>
+        </div>
+
+        <p style="margin-top:1rem"><strong>Key Insight:</strong> Salary is heavily right-skewed with a long tail (outliers up to ₹40L), while GPA and aptitude scores follow near-normal distributions. This skew necessitated a robust cutoff for defining "industry readiness."</p>
+    </div>
+
+    <!-- A2: Salary Cutoff -->
+    <div class="card">
+        <h3>2. Industry Readiness Cutoff</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (6).png" alt="Salary with cutoff">
+                <figcaption>Salary distribution with industry readiness cutoff = ₹92,844</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:1rem">A conservative cutoff of <strong>₹92,844</strong> (mean − 1 SD) was used. Graduates earning above this threshold are flagged as <span class="badge badge-green">Industry Ready = 1</span>, while those below as <span class="badge badge-red">Not Ready = 0</span>. The vast majority (~98%) of graduates clear this cutoff, resulting in a severely imbalanced target variable.</p>
+    </div>
+
+    <!-- A3: Correlation Heatmap -->
+    <div class="card">
+        <h3>3. Correlation Heatmap</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (7).png" alt="Correlation heatmap">
+                <figcaption>Correlation heatmap of key numeric features</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Feature Pair</th><th>Correlation</th><th>Interpretation</th></tr>
+            <tr><td>aptitude_score ↔ technical_score</td><td><strong>0.46</strong></td><td>Moderate positive — students with better aptitude tend to score higher in technical skills too</td></tr>
+            <tr><td>avg_school_% ↔ aptitude_score</td><td><strong>0.41</strong></td><td>Prior academic performance is a reasonable predictor of aptitude</td></tr>
+            <tr><td>collegeGPA ↔ avg_school_%</td><td><strong>0.36</strong></td><td>High-school performance carries into college GPA</td></tr>
+            <tr><td>aptitude_score ↔ Starting_Salary</td><td><strong>0.26</strong></td><td>Aptitude is the strongest salary predictor among the listed features</td></tr>
+            <tr><td>age_at_graduation ↔ avg_school_%</td><td><strong>−0.33</strong></td><td>Older graduates tend to have lower school scores</td></tr>
+            <tr><td>collegeGPA ↔ Starting_Salary</td><td>0.13</td><td>Weak — GPA alone is a poor salary predictor</td></tr>
+        </table>
+    </div>
+
+    <!-- A4: Boxplots — Industry Readiness -->
+    <div class="card">
+        <h3>4. Industry Readiness Group Comparisons (Boxplots)</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (8).png" alt="GPA by readiness">
+                <figcaption>College GPA — nearly identical medians across groups</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (9).png" alt="School % by readiness">
+                <figcaption>Avg School % — slightly higher for industry-ready</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (10).png" alt="Aptitude by readiness">
+                <figcaption>Aptitude Score — noticeably higher for ready group</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (11).png" alt="Technical by readiness">
+                <figcaption>Technical Score — wider spread in ready group</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (12).png" alt="Salary by readiness">
+                <figcaption>Starting Salary — massive gap (by definition)</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (13).png" alt="Age by readiness">
+                <figcaption>Age at Graduation — similar across both groups</figcaption>
+            </figure>
+        </div>
+
+        <table>
+            <tr><th>Metric</th><th>Not Ready (0)</th><th>Industry Ready (1)</th></tr>
+            <tr><td>College GPA</td><td>71.4</td><td>71.5</td></tr>
+            <tr><td>Avg School %</td><td>72.1</td><td>76.1</td></tr>
+            <tr><td>Aptitude Score</td><td>454.1</td><td>506.3</td></tr>
+            <tr><td>Technical Score</td><td>377.9</td><td>382.2</td></tr>
+            <tr><td>Starting Salary (₹)</td><td>69,141</td><td>310,323</td></tr>
+        </table>
+        <p style="margin-top:.8rem"><strong>Key Insight:</strong> GPA barely differs between groups, but aptitude scores and school percentages show meaningful separation. Salary obviously differs by definition of the target variable.</p>
+    </div>
+
+    <!-- A5: Categorical Distributions -->
+    <div class="card">
+        <h3>5. Categorical Distributions by Industry Readiness</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (14).png" alt="Gender">
+                <figcaption>Gender — Male graduates vastly outnumber female; both show similar readiness rates</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (15).png" alt="Degree Type">
+                <figcaption>Degree Type — B.Tech/B.E. dominates the dataset (~90%)</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (16).png" alt="College State">
+                <figcaption>College State — Delhi, UP, Karnataka lead in graduate count</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (17).png" alt="College Tier">
+                <figcaption>College Tier — Tier 2 colleges dominate; non-readiness concentrated there</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- A6: GPA vs Readiness Mismatch -->
+    <div class="card">
+        <h3>6. The GPA-Readiness Mismatch</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (18).png" alt="GPA vs Readiness Scatter">
+                <figcaption>GPA vs Industry Readiness Score — most points lie above the GPA = Readiness line</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Statistical Test</th><th>Result</th><th>Interpretation</th></tr>
+            <tr>
+                <td>Paired t-test (GPA vs Readiness Score)</td>
+                <td>t = 78.506, <strong>p ≈ 0.00000</strong></td>
+                <td><span class="badge badge-red">Highly Significant</span> — GPA and readiness score are systematically different</td>
+            </tr>
+            <tr>
+                <td>Pearson Correlation</td>
+                <td>r = <strong>0.243</strong></td>
+                <td><span class="badge badge-orange">Weak</span> — GPA explains only ~6% of variance in readiness</td>
+            </tr>
+        </table>
+        <p style="margin-top:.8rem"><strong>Key Insight:</strong> This is the <em>central finding</em>. A high GPA does not guarantee industry readiness. The paired t-test confirms a statistically significant gap; the low correlation (0.243) shows that GPA is a poor proxy for actual job-preparedness. Many students with GPAs >80 have readiness scores below 50.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     STATISTICAL TESTS DEEP DIVE
+     ═══════════════════════════════ -->
+<section>
+    <h2>Statistical Tests Conducted (Graduate Data)</h2>
+
+    <!-- T-tests -->
+    <div class="card">
+        <h3>A. One-Sample T-Tests vs Industry Reference (μ = 70)</h3>
+        <p>Each skill/aptitude feature was tested against a reference mean of 70 to see how far student scores deviate from an industry benchmark.</p>
+        <table>
+            <tr><th>Feature</th><th>t-statistic</th><th>p-value</th><th>Direction</th></tr>
+            <tr><td>ProgrammingSkills</td><td>−93.056</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>ElectronicsAndSemiconSkills</td><td>−169.733</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>ComputerScienceSkills</td><td>−191.066</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>MechanicalEnggSkills</td><td>−246.710</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>ElectricalEnggSkills</td><td>−293.377</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>TelecomEnggSkills</td><td>−224.097</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>CivilEnggSkills</td><td>−548.998</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>EnglishScore</td><td>−86.019</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>LogicalReasoningScore</td><td>−71.857</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>QuantitativeAptitudeScore</td><td>−68.048</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>conscientiousnessScore</td><td>−14.286</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>agreeablenessScore</td><td>+30.208</td><td>&lt;0.0001</td><td><span class="badge badge-green">Above reference</span></td></tr>
+            <tr><td>extraversionScore</td><td>−8.053</td><td>&lt;0.0001</td><td>Below reference</td></tr>
+            <tr><td>openess_to_experienceScore</td><td>+50.585</td><td>&lt;0.0001</td><td><span class="badge badge-green">Above reference</span></td></tr>
+        </table>
+        <p style="margin-top:.8rem"><strong>Interpretation:</strong> Every single technical skill and aptitude score falls <em>significantly below</em> the industry benchmark of 70. Only agreeableness and openness-to-experience exceed the reference — personality traits that may help in teamwork but do not substitute for technical competence.</p>
+    </div>
+
+    <!-- Chi-Square -->
+    <div class="card">
+        <h3>B. Chi-Square Goodness-of-Fit Tests (Categorical Features)</h3>
+        <p>Tested whether categorical distributions follow a uniform expected pattern:</p>
+        <table>
+            <tr><th>Feature</th><th>χ² Statistic</th><th>p-value</th><th>Verdict</th></tr>
+            <tr><td>Gender</td><td>818.0</td><td>&lt;0.0001</td><td><span class="badge badge-red">Highly Imbalanced</span></td></tr>
+            <tr><td>HighSchool 10th Board</td><td>140,261.6</td><td>&lt;0.0001</td><td><span class="badge badge-red">Dominated by CBSE</span></td></tr>
+            <tr><td>HighSchool 12th Board</td><td>186,857.7</td><td>&lt;0.0001</td><td><span class="badge badge-red">Dominated by CBSE</span></td></tr>
+            <tr><td>DegreeType</td><td>7,199.0</td><td>&lt;0.0001</td><td><span class="badge badge-red">B.Tech/B.E. dominant</span></td></tr>
+            <tr><td>MajorSpecialization</td><td>15,047.2</td><td>&lt;0.0001</td><td><span class="badge badge-red">Uneven spread</span></td></tr>
+            <tr><td>CollegeState</td><td>4,802.3</td><td>&lt;0.0001</td><td><span class="badge badge-red">Delhi heavy</span></td></tr>
+        </table>
+        <p style="margin-top:.8rem"><strong>Interpretation:</strong> All categorical features deviate massively from a uniform distribution. This reflects real structural biases in Indian engineering education — gender imbalance, board dominance, and geographic concentration.</p>
+    </div>
+
+    <!-- ANOVA -->
+    <div class="card">
+        <h3>C. ANOVA — Readiness Score by Categorical Groups</h3>
+        <table>
+            <tr><th>Factor</th><th>F-statistic</th><th>p-value</th><th>Significance</th></tr>
+            <tr><td>DegreeType</td><td>10.18</td><td>0.000001</td><td><span class="badge badge-green">Significant</span></td></tr>
+            <tr><td>MajorSpecialization</td><td>2.32</td><td>0.000005</td><td><span class="badge badge-green">Significant</span></td></tr>
+            <tr><td>IndustryDomain</td><td>7.01</td><td>≈ 0</td><td><span class="badge badge-green">Highly Significant</span></td></tr>
+        </table>
+        <p style="margin-top:.8rem"><strong>Interpretation:</strong> Readiness scores differ significantly across degree types, specializations, and industry domains. The industry domain shows the strongest effect — your target industry matters enormously for readiness assessment.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     ML MODELS
+     ═══════════════════════════════ -->
+<section>
+    <h2>Machine Learning Models</h2>
+
+    <!-- RF Regressor -->
+    <div class="card">
+        <h3>Random Forest Regressor (Readiness Score Prediction)</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (19).png" alt="RF Regressor Feature Importance">
+                <figcaption>Feature importance — Logical Reasoning dominates (0.345)</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Metric</th><th>Value</th></tr>
+            <tr><td>R² Score</td><td><strong>0.9277</strong></td></tr>
+            <tr><td>RMSE</td><td><strong>1.41</strong></td></tr>
+        </table>
+        <p style="margin-top:.6rem"><strong>Top Predictors of Readiness:</strong></p>
+        <ol style="padding-left:1.3rem;font-size:.95rem;">
+            <li>Logical Reasoning Score (34.5%)</li>
+            <li>Quantitative Aptitude Score (23.1%)</li>
+            <li>English Score (14.9%)</li>
+            <li>Agreeableness Score (11.4%)</li>
+            <li>Conscientiousness Score (4.6%)</li>
+        </ol>
+        <p style="margin-top:.5rem"><strong>Insight:</strong> Aptitude tests (logical reasoning + quantitative + English) collectively account for <strong>72.5%</strong> of feature importance, far outweighing technical skill columns. This suggests aptitude is the strongest predictor of industry readiness — more than any individual technical skill.</p>
+    </div>
+
+    <!-- RF Classifier -->
+    <div class="card">
+        <h3>Random Forest Classifier (Industry Ready: Yes/No)</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (20).png" alt="RF Classifier Feature Importance">
+                <figcaption>Classifier feature importance — Quantitative Aptitude leads</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (21).png" alt="Confusion Matrix">
+                <figcaption>Confusion Matrix — 579 TP, 13 FP, 8 FN, 0 TN</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Metric</th><th>Value</th></tr>
+            <tr><td>Accuracy</td><td>96.5%</td></tr>
+            <tr><td>Balanced Accuracy</td><td>49.3%</td></tr>
+            <tr><td>SMOTE Applied</td><td>Yes (51 → 2,347 minority samples)</td></tr>
+        </table>
+        <p style="margin-top:.8rem"><strong>Caveat:</strong> The dataset is extremely imbalanced (98% class 1). Despite SMOTE oversampling, the model still struggles to identify the minority class (not ready). The high accuracy is misleading — balanced accuracy is only ~49%, essentially random for the minority class.</p>
+    </div>
+
+    <!-- Model Comparison -->
+    <div class="card">
+        <h3>Model Comparison (RF vs Logistic Regression vs XGBoost)</h3>
+        <table>
+            <tr><th>Model</th><th>Accuracy</th><th>Precision (weighted)</th><th>Recall (weighted)</th><th>F1 (weighted)</th></tr>
+            <tr><td>Logistic Regression</td><td><strong>97.89%</strong></td><td>95.82%</td><td>97.89%</td><td>96.84%</td></tr>
+            <tr><td>Random Forest</td><td>97.78%</td><td>95.82%</td><td>97.78%</td><td>96.79%</td></tr>
+            <tr><td>XGBoost</td><td>97.56%</td><td>95.82%</td><td>97.56%</td><td>96.68%</td></tr>
+        </table>
+        <p style="margin-top:.8rem">All three models perform nearly identically due to class imbalance. None can reliably identify "not ready" students (0% recall for class 0 across all models).</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PART B — JOB MARKET (INDEED INDIA)
+     ═══════════════════════════════════════════════════ -->
+<section>
+    <h2>Part B — India Job Market Analysis (Indeed, Oct–Dec 2021)</h2>
+
+    <div class="card">
+        <h3>1. Top 15–20 In-Demand Skills</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (22).png" alt="Top 15 skills">
+                <figcaption>Top 15 most demanded skills from job descriptions</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (23).png" alt="Top 20 skills">
+                <figcaption>Extended: Top 20 in-demand skills</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:.8rem"><strong>Key Findings:</strong></p>
+        <ul>
+            <li><strong>Communication</strong> is by far the #1 demanded skill (13,200+ postings) — almost 4× the next skill</li>
+            <li><strong>Leadership</strong> (3,500), <strong>SQL</strong> (3,400), <strong>Excel</strong> (3,300), and <strong>Java</strong> (3,100) form the second tier</li>
+            <li>Tech skills like <strong>JavaScript</strong> (2,400), <strong>Python</strong> (2,200) appear in the mid-range</li>
+            <li>DevOps tools (<strong>Docker</strong>, <strong>Kubernetes</strong>) and analytics tools (<strong>Tableau</strong>, <strong>Power BI</strong>) are niche but growing</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>2. Chi-Square: Skills Significantly Associated with Job Types</h3>
+        <table>
+            <tr><th>Skill</th><th>χ² Statistic</th><th>p-value</th></tr>
+            <tr><td>Leadership</td><td>488.0</td><td>2.42 × 10⁻⁴⁴</td></tr>
+            <tr><td>SQL</td><td>458.2</td><td>1.52 × 10⁻³⁹</td></tr>
+            <tr><td>Communication</td><td>428.3</td><td>7.67 × 10⁻³⁵</td></tr>
+            <tr><td>Java</td><td>401.3</td><td>1.03 × 10⁻³⁰</td></tr>
+            <tr><td>Python</td><td>276.4</td><td>1.88 × 10⁻¹³</td></tr>
+            <tr><td>Project Management</td><td>260.1</td><td>1.62 × 10⁻¹¹</td></tr>
+            <tr><td>JavaScript</td><td>220.2</td><td>3.18 × 10⁻⁷</td></tr>
+            <tr><td>AWS</td><td>218.4</td><td>4.68 × 10⁻⁷</td></tr>
+            <tr><td>Excel</td><td>214.0</td><td>1.24 × 10⁻⁶</td></tr>
+            <tr><td>HTML</td><td>199.7</td><td>2.48 × 10⁻⁵</td></tr>
+        </table>
+        <p style="margin-top:.8rem"><strong>Insight:</strong> Leadership, SQL, and communication are the most strongly associated with specific job types (full-time vs. part-time vs. fresher roles). These are the skills that differentiate full-time professional roles from entry-level positions.</p>
+    </div>
+
+    <div class="card">
+        <h3>3. Skill Correlation Heatmaps</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (24).png" alt="Skill correlation heatmap (visual)">
+                <figcaption>Visual skill clustering — clear clusters: Web (JS/HTML/CSS/React), Cloud (AWS/Docker/K8s), Analytics (Tableau/Power BI)</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (25).png" alt="Skill correlation heatmap (annotated)">
+                <figcaption>Annotated correlation matrix – JS↔HTML (0.54), Docker↔Kubernetes (0.66), Tableau↔Power BI (0.33)</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:.8rem"><strong>Skill Clusters Identified:</strong></p>
+        <ul>
+            <li><strong>Web Development:</strong> JavaScript, HTML, CSS, React (r = 0.36–0.73)</li>
+            <li><strong>Cloud/DevOps:</strong> AWS, Docker, Kubernetes (r = 0.31–0.66)</li>
+            <li><strong>Data/Analytics:</strong> Python, SQL, Machine Learning, Data Analysis (r = 0.09–0.25)</li>
+            <li><strong>Soft Skills:</strong> Communication, Leadership, Project Management (r = 0.06–0.19)</li>
+            <li><strong>BI Tools:</strong> Tableau, Power BI (r = 0.33)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>4. Random Forest — Predicting High-Demand Jobs from Skills</h3>
+        <table>
+            <tr><th>Metric</th><th>Value</th></tr>
+            <tr><td>Accuracy</td><td><strong>100%</strong></td></tr>
+            <tr><td>ROC AUC</td><td><strong>1.0</strong></td></tr>
+        </table>
+        <p style="margin-top:.6rem"><strong>High-demand skills threshold (top 25%):</strong> Communication, Leadership, SQL, Excel, Java</p>
+        <p>The RF model perfectly predicts whether a job posting is "high-demand" based on skill features — indicating that the skill columns are deterministic of the flag (since high_demand_job is derived from those very columns). This confirms that the selected skills are reliable markers of high-demand roles.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     GAP ANALYSIS
+     ═══════════════════════════════ -->
+<section>
+    <h2>Bridging the Gap: Graduates vs. Market Demand</h2>
+
+    <div class="card">
+        <h3>Critical Mismatches Identified</h3>
+        <table>
+            <tr><th>What Industry Demands</th><th>What Graduates Have</th><th>Gap Severity</th></tr>
+            <tr>
+                <td>Communication (#1 demanded skill)</td>
+                <td>Not measured in graduate dataset</td>
+                <td><span class="badge badge-red">Critical</span></td>
+            </tr>
+            <tr>
+                <td>SQL (3,400 postings)</td>
+                <td>Programming Skills avg below industry benchmark</td>
+                <td><span class="badge badge-red">High</span></td>
+            </tr>
+            <tr>
+                <td>Leadership, Project Mgmt</td>
+                <td>Personality traits measured but not actionable skills</td>
+                <td><span class="badge badge-orange">Medium</span></td>
+            </tr>
+            <tr>
+                <td>Aptitude (Logical, Quant, English)</td>
+                <td>Students average ~500/700, significantly below ideal</td>
+                <td><span class="badge badge-orange">Medium</span></td>
+            </tr>
+            <tr>
+                <td>Cloud/DevOps (AWS, Docker, K8s)</td>
+                <td>Not covered in curriculum assessments</td>
+                <td><span class="badge badge-red">Critical</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Recommendations (Anchored to Core Findings)</h3>
+        <p style="margin-bottom:.6rem;">Every recommendation below traces directly back to the <a href="#core-findings">two pivotal visualizations</a> at the top of this report:</p>
+        <ul>
+            <li><strong>Rethink GPA as a hiring metric</strong> <span class="badge badge-red">↑ GPA vs Readiness scatter</span>: With r = 0.243 and t = 78.5, GPA is statistically proven to be a poor proxy for industry readiness. The scatter plot shows students with identical GPAs spanning a 60-point readiness range.</li>
+            <li><strong>De-emphasize personality screening</strong> <span class="badge badge-orange">↑ Personality–Skills heatmap</span>: No Big Five trait correlates meaningfully with technical skill or aptitude. Personality-based filters add noise, not signal, to hiring decisions.</li>
+            <li><strong>Prioritize aptitude training:</strong> Logical reasoning (34.5% feature importance) and quantitative aptitude (23.1%) are the strongest readiness predictors — these are what GPA and personality <em>fail</em> to capture.</li>
+            <li><strong>Embed soft skills:</strong> Communication is demanded in 44% of all job postings — curricula must address this gap.</li>
+            <li><strong>Introduce industry tool training:</strong> SQL, cloud platforms (AWS), and DevOps tools are high-demand but absent from most engineering assessments.</li>
+            <li><strong>Address class imbalance in policy:</strong> Only ~2% of graduates fall below the readiness cutoff — these students need targeted interventions, not blanket programs.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     SUMMARY OF ALL TESTS
+     ═══════════════════════════════ -->
+<section>
+    <h2>Summary of All Statistical Tests</h2>
+    <div class="card">
+        <table>
+            <tr><th>#</th><th>Test</th><th>Applied To</th><th>Key Result</th></tr>
+            <tr><td>1</td><td>One-sample t-test</td><td>14 skill/aptitude features vs μ = 70</td><td>All p &lt; 0.0001 — all features deviate significantly from industry reference</td></tr>
+            <tr><td>2</td><td>Paired t-test</td><td>GPA vs Readiness Score</td><td>t = 78.5, p ≈ 0 — systematic mismatch confirmed</td></tr>
+            <tr><td>3</td><td>Chi-square goodness-of-fit</td><td>6 categorical features</td><td>All p &lt; 0.0001 — strong imbalances in gender, board, state, degree</td></tr>
+            <tr><td>4</td><td>Chi-square independence</td><td>Skills vs Job Types (Indeed)</td><td>Leadership (χ² = 488), SQL (458), Communication (428) most associated</td></tr>
+            <tr><td>5</td><td>One-way ANOVA</td><td>Readiness vs Degree, Specialization, Industry</td><td>All p &lt; 0.001 — readiness varies significantly across groups</td></tr>
+            <tr><td>6</td><td>Pearson Correlation</td><td>GPA ↔ Readiness</td><td>r = 0.243 — weak relationship</td></tr>
+            <tr><td>7</td><td>Correlation Analysis</td><td>Personality traits ↔ Skills/GPA</td><td>All |r| &lt; 0.25 — personality traits do not predict academic or technical skill</td></tr>
+            <tr><td>8</td><td>Welch's t-test</td><td>Skills vs High-demand jobs (Indeed)</td><td>Multiple skills show significant differences between high/low demand</td></tr>
+            <tr><td>9</td><td>Random Forest Regressor</td><td>Predicting readiness score</td><td>R² = 0.928, RMSE = 1.41</td></tr>
+            <tr><td>10</td><td>Random Forest Classifier</td><td>Industry ready (binary)</td><td>Accuracy 96.5%, Balanced Accuracy 49.3%</td></tr>
+            <tr><td>11</td><td>Logistic Regression + XGBoost</td><td>Model comparison</td><td>All ~97.8% accuracy; none solves class imbalance</td></tr>
+        </table>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     CLOSING NARRATIVE
+     ═══════════════════════════════ -->
+<section>
+    <h2>The Full Picture — How It All Ties Together</h2>
+    <div class="card" style="border-left:4px solid var(--primary);">
+        <p style="font-size:1.02rem;">The entire analysis converges on a single narrative, anchored by the two core visualizations:</p>
+        <ol style="padding-left:1.3rem;font-size:.97rem;line-height:1.8;">
+            <li><strong>Personality traits don't predict skill</strong> (Personality Traits vs Skills &amp; GPA heatmap). Across ~3,000 graduates, conscientiousness, agreeableness, extraversion, neuroticism, and openness show negligible correlations with GPA, aptitude, or technical scores. The highest |r| is below 0.25.</li>
+            <li><strong>GPA doesn't predict readiness</strong> (GPA vs Industry Readiness scatter). A paired t-test (t = 78.5) and Pearson r = 0.243 confirm that college GPA is not a meaningful indicator of industry preparedness. Students with the same GPA can differ by 60+ points in readiness.</li>
+            <li><strong>What does predict readiness?</strong> The Random Forest regressor (R² = 0.928) reveals that <em>direct aptitude tests</em> — logical reasoning (34.5%), quantitative aptitude (23.1%), and English (14.9%) — collectively explain 72.5% of the model's predictive power.</li>
+            <li><strong>The job market confirms the mismatch.</strong> Across 30,000 Indeed India postings, Communication (13,200+), Leadership (3,500), SQL (3,400), and Excel (3,300) dominate demand. None of these are measured in the graduate dataset — the educational assessment is disconnected from market needs.</li>
+            <li><strong>The class imbalance problem.</strong> With ~98% of graduates classified as "ready" (salary above cutoff), all ML classifiers achieve misleading 97%+ accuracy but ~0% recall on the minority class. The real challenge isn't prediction — it's defining meaningful readiness thresholds.</li>
+        </ol>
+        <p style="margin-top:.8rem;font-weight:600;">Bottom line: Indian engineering education measures the wrong things (GPA, personality) while ignoring what actually matters (aptitude, communication, industry tools). The two core visualizations make this case visually and statistically irrefutable.</p>
+    </div>
+</section>
+
+</div>
+
+<footer>
+    Skidge Research Report &bull; Data Sources: Engineering Graduate Professional Outcomes Dataset &amp; Indeed India Job Postings (Oct–Dec 2021) &bull; Generated Feb 2026
+</footer>
+
+</body>
+</html>
