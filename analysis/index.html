@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKIDGE Research Report — Engineering Graduate Outcomes &amp; Job Market Alignment in India</title>
+<style>
+:root {
+    --primary: #1a237e;
+    --secondary: #283593;
+    --accent: #0d47a1;
+    --green: #2e7d32;
+    --red: #c62828;
+    --orange: #e65100;
+    --light: #f5f7fa;
+    --bg: #ffffff;
+    --text: #212121;
+    --muted: #616161;
+    --border: #e0e0e0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; line-height: 1.7; color: var(--text); background: var(--bg); }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+header.hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: #fff; padding: 3rem 1.5rem 2.5rem; text-align: center;
+}
+header.hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: .5rem; letter-spacing: -0.5px; }
+header.hero p { font-size: 1.05rem; opacity: .9; max-width: 750px; margin: 0 auto; }
+header.hero .meta { font-size: .85rem; opacity: .7; margin-top: .8rem; }
+
+section { margin-top: 2.5rem; }
+section > h2 { font-size: 1.5rem; color: var(--primary); border-bottom: 3px solid var(--primary); padding-bottom: .4rem; margin-bottom: 1.2rem; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+.card h3 { color: var(--secondary); font-size: 1.15rem; margin-bottom: .8rem; }
+
+/* KPI Strip */
+.kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 2rem 0; }
+.kpi { background: var(--light); border-radius: 8px; padding: 1.2rem; text-align: center; border-left: 4px solid var(--primary); }
+.kpi .num { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+.kpi .label { font-size: .82rem; color: var(--muted); margin-top: .2rem; }
+
+table { width: 100%; border-collapse: collapse; margin: .8rem 0; font-size: .92rem; }
+th, td { padding: .55rem .7rem; border-bottom: 1px solid var(--border); text-align: left; }
+th { background: var(--light); font-weight: 600; color: var(--secondary); white-space: nowrap; }
+tr:hover td { background: #fafbfc; }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .78rem; font-weight: 600; }
+.badge-green { background: #e8f5e9; color: var(--green); }
+.badge-red { background: #ffebee; color: var(--red); }
+.badge-orange { background: #fff3e0; color: var(--orange); }
+.badge-blue { background: #e3f2fd; color: var(--accent); }
+
+.img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.img-grid figure { margin: 0; text-align: center; }
+.img-grid img { width: 100%; border-radius: 6px; border: 1px solid var(--border); }
+.img-grid figcaption { font-size: .82rem; color: var(--muted); margin-top: .3rem; }
+
+.methodology-note { background: #fffde7; border-left: 4px solid #f9a825; padding: 1rem 1.2rem; border-radius: 0 6px 6px 0; margin: 1rem 0; font-size: .93rem; }
+.correction-note { background: #fce4ec; border-left: 4px solid var(--red); padding: 1rem 1.2rem; border-radius: 0 6px 6px 0; margin: 1rem 0; font-size: .93rem; }
+.insight-note { background: #e8f5e9; border-left: 4px solid var(--green); padding: 1rem 1.2rem; border-radius: 0 6px 6px 0; margin: 1rem 0; font-size: .93rem; }
+
+.stat-highlight { display: inline-block; background: #e3f2fd; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; font-weight: 600; }
+
+footer { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); margin-top: 3rem; }
+
+@media (max-width: 600px) {
+    header.hero h1 { font-size: 1.4rem; }
+    .kpi-strip { grid-template-columns: 1fr 1fr; }
+    .img-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>SKIDGE Research Report</h1>
+    <p>Engineering Graduate Professional Outcomes &amp; Job Market Alignment in India: A Corrected Regression Analysis</p>
+    <div class="meta">Datasets: 2,998 Engineering Graduates &bull; 30,000 Indeed India Job Postings (Oct&ndash;Dec 2021) &bull; Corrected Methodology (Regression, not Binary Classification)</div>
+</header>
+
+<div class="container">
+
+<!-- ═══════════════════════════════
+     METHODOLOGY NOTE
+     ═══════════════════════════════ -->
+<section>
+    <h2>Methodology &amp; Corrections</h2>
+    <div class="correction-note">
+        <strong>Important Correction from Prior Analysis:</strong> A previous iteration of this study defined a binary &ldquo;industry ready&rdquo; target using a salary cutoff of &#8377;92,844 (mean &minus; 1&nbsp;SD), resulting in a 98%/2% class split. All classifiers achieved misleading ~97% accuracy with near-zero minority-class recall. <strong>This report replaces that flawed classification with a proper regression approach</strong>, predicting <code>log(Starting_Salary)</code> directly, following the corrected SKIDGE methodology.
+    </div>
+
+    <div class="card">
+        <h3>12-Step Corrected Methodology</h3>
+        <ol style="padding-left:1.3rem; font-size:.93rem; line-height:2;">
+            <li><strong>Data Loading:</strong> 2,998 engineering graduates with 34 features</li>
+            <li><strong>Leakage Removal:</strong> Dropped Student_ID, CollegeID, CollegeCityID (identifiers that would leak information)</li>
+            <li><strong>Feature Engineering:</strong> DateOfBirth &rarr; Age; created CognitiveScore, AcademicStrength, TechInteraction composites</li>
+            <li><strong>Target Transformation:</strong> Applied <code>log(Starting_Salary)</code> to normalise the right-skewed distribution (raw skew: 4.47 &rarr; log skew: &minus;0.13)</li>
+            <li><strong>Preprocessing Pipeline:</strong> StandardScaler for numeric features, OneHotEncoder for categorical (6 categorical, 26 numeric features)</li>
+            <li><strong>Train/Test Split:</strong> 80/20 stratified split (2,398 train / 600 test), random_state=42</li>
+            <li><strong>Models Trained:</strong> Random Forest (n=200), XGBoost (n=500, lr=0.05), ElasticNet (&alpha;=0.1), Linear Regression</li>
+            <li><strong>Evaluation:</strong> R&sup2;, RMSE, MAE on log scale; MAPE on actual salary scale; 5-fold cross-validation</li>
+        </ol>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     KPI STRIP
+     ═══════════════════════════════ -->
+<div class="kpi-strip">
+    <div class="kpi">
+        <div class="num">2,998</div>
+        <div class="label">Engineering Graduates Analysed</div>
+    </div>
+    <div class="kpi">
+        <div class="num">30,000</div>
+        <div class="label">Job Postings (Indeed India)</div>
+    </div>
+    <div class="kpi">
+        <div class="num">R&sup2; = 0.257</div>
+        <div class="label">Best Model (RF, log salary)</div>
+    </div>
+    <div class="kpi">
+        <div class="num">r = 0.132</div>
+        <div class="label">GPA&ndash;Salary Correlation</div>
+    </div>
+    <div class="kpi">
+        <div class="num">37.9%</div>
+        <div class="label">RF Salary MAPE</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════
+     CORE FINDINGS
+     ═══════════════════════════════ -->
+<section id="core-findings">
+    <h2>Core Findings</h2>
+
+    <!-- Finding 1: Personality vs Skills -->
+    <div class="card" style="border-left:4px solid var(--accent);">
+        <h3>A. Personality Traits Do Not Predict Academic or Technical Skill</h3>
+        <div class="img-grid" style="grid-template-columns:1fr;max-width:720px;margin:0 auto;">
+            <figure>
+                <img src="analysis-images/05_personality_vs_skills.png" alt="Personality Traits vs Skills & GPA Correlation Heatmap">
+                <figcaption>Correlation heatmap: Big Five personality traits against GPA, aptitude, and technical scores</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:1rem;"><strong>What this shows:</strong> The Big Five personality traits &mdash; conscientiousness, agreeableness, extraversion, neuroticism, and openness &mdash; are plotted against GPA, aptitude, and technical scores. All correlations are negligible:</p>
+        <ul>
+            <li>Maximum |r| across all personality&ndash;skill pairs: <span class="stat-highlight">0.191</span></li>
+            <li>No personality trait meaningfully predicts GPA, aptitude, or programming skill</li>
+            <li>This is consistent across all ~3,000 graduates</li>
+        </ul>
+        <p><strong>Implication:</strong> Hiring screens weighted on personality assessments are not supported by this data. Personality traits are largely <em>orthogonal</em> to the skills that predict salary outcomes.</p>
+    </div>
+
+    <!-- Finding 2: GPA vs Salary -->
+    <div class="card" style="border-left:4px solid var(--red);">
+        <h3>B. GPA Is a Weak Predictor of Starting Salary</h3>
+        <div class="img-grid" style="grid-template-columns:1fr;max-width:720px;margin:0 auto;">
+            <figure>
+                <img src="analysis-images/04_gpa_vs_salary.png" alt="GPA vs Starting Salary Scatter Plot">
+                <figcaption>College GPA vs Starting Salary, coloured by log(salary)</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:1rem;"><strong>Statistical evidence:</strong></p>
+        <table>
+            <tr><th>Test</th><th>Statistic</th><th>p-value</th><th>Interpretation</th></tr>
+            <tr><td>Pearson Correlation</td><td>r = <strong>0.132</strong></td><td>4.13 &times; 10<sup>&minus;13</sup></td><td>GPA explains <strong>1.7%</strong> of salary variance</td></tr>
+            <tr><td>Spearman Rank Correlation</td><td>&rho; = <strong>0.230</strong></td><td>3.50 &times; 10<sup>&minus;37</sup></td><td>Monotonic relationship is slightly stronger but still weak</td></tr>
+        </table>
+        <p style="margin-top:.8rem;"><strong>Implication:</strong> While statistically significant (p &lt; 0.001), the effect size is tiny. Students with GPA 60 and GPA 85 show nearly overlapping salary distributions. GPA cutoffs in recruitment systematically misclassify candidates.</p>
+    </div>
+
+    <div class="card" style="background:var(--light);">
+        <h3>How These Two Findings Connect</h3>
+        <p>Together, these establish a <strong>double failure</strong> in common graduate assessment:</p>
+        <ol style="padding-left:1.3rem;font-size:.97rem;">
+            <li><strong>GPA fails as a salary predictor</strong> &mdash; Pearson r = 0.132, explaining only 1.7% of variance.</li>
+            <li><strong>Personality fails as a skill predictor</strong> &mdash; max |r| = 0.191 across all personality&ndash;skill pairs.</li>
+        </ol>
+        <p style="margin-top:.5rem;">The strongest single salary predictor in the dataset is <strong>CognitiveScore</strong> (a composite of Quantitative Aptitude, Logical Reasoning, and English scores), which alone accounts for 12.7% of Random Forest feature importance. Neither GPA nor personality comes close.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PART A: SALARY ANALYSIS & DISTRIBUTIONS
+     ═══════════════════════════════════════════════════ -->
+<section>
+    <h2>Part A &mdash; Engineering Graduate Salary Analysis</h2>
+
+    <!-- Salary distribution -->
+    <div class="card">
+        <h3>1. Salary Distribution &amp; Log Transformation</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="analysis-images/01_salary_distribution.png" alt="Salary Distribution Raw and Log">
+                <figcaption>Left: Raw salary (right-skewed, skew = 4.47). Right: Log-transformed (near-normal, skew = &minus;0.13)</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Statistic</th><th>Raw Salary</th><th>Log(Salary)</th></tr>
+            <tr><td>Mean</td><td>&#8377;3,05,175</td><td>12.39</td></tr>
+            <tr><td>Median</td><td>&#8377;3,00,000</td><td>12.61</td></tr>
+            <tr><td>Std Dev</td><td>&#8377;2,12,331</td><td>0.52</td></tr>
+            <tr><td>Min / Max</td><td>&#8377;35,000 / &#8377;40,00,000</td><td>10.46 / 15.20</td></tr>
+            <tr><td>Skewness</td><td>4.47</td><td>&minus;0.13</td></tr>
+        </table>
+        <div class="methodology-note">
+            <strong>Why log transform?</strong> The raw salary is heavily right-skewed with outliers up to &#8377;40L. The log transformation reduces skewness from 4.47 to &minus;0.13, making it suitable for regression. Shapiro-Wilk test on log(salary): W = 0.977, p = 1.49 &times; 10<sup>&minus;21</sup> (still technically non-normal due to large n, but adequately symmetric for tree-based models).
+        </div>
+    </div>
+
+    <!-- Feature distributions -->
+    <div class="card">
+        <h3>2. Key Feature Distributions</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="analysis-images/02_feature_distributions.png" alt="Feature Distributions">
+                <figcaption>Six key features: GPA (~72 mean), school percentages, and aptitude scores (~500 mean)</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- Correlation Heatmap -->
+    <div class="card">
+        <h3>3. Feature Correlation Heatmap</h3>
+        <div class="img-grid" style="grid-template-columns:1fr; max-width:800px; margin:0 auto;">
+            <figure>
+                <img src="analysis-images/03_correlation_heatmap.png" alt="Full Correlation Heatmap">
+                <figcaption>Lower-triangle Pearson correlation matrix of all numeric features and Starting Salary</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:1rem"><strong>Strongest salary correlations</strong> (all statistically significant at p &lt; 0.001):</p>
+        <table>
+            <tr><th>Feature</th><th>r with Salary</th><th>Interpretation</th></tr>
+            <tr><td>QuantitativeAptitudeScore</td><td><strong>0.239</strong></td><td>Strongest single predictor</td></tr>
+            <tr><td>LogicalReasoningScore</td><td><strong>0.194</strong></td><td>Second strongest</td></tr>
+            <tr><td>HighSchool10thPercentage</td><td><strong>0.181</strong></td><td>Early academic signal persists</td></tr>
+            <tr><td>EnglishScore</td><td><strong>0.180</strong></td><td>Communication-adjacent skill</td></tr>
+            <tr><td>HighSchool12thPercentage</td><td><strong>0.173</strong></td><td>Consistent with 10th%</td></tr>
+            <tr><td>collegeGPA</td><td>0.132</td><td><span class="badge badge-orange">Weaker than school %</span></td></tr>
+        </table>
+        <div class="insight-note">
+            <strong>Key insight:</strong> College GPA (r = 0.132) is a <em>weaker</em> salary predictor than high-school 10th percentage (r = 0.181) or any of the three aptitude scores. This challenges the heavy emphasis placed on college grades in Indian engineering recruitment.
+        </div>
+    </div>
+
+    <!-- College Tier -->
+    <div class="card">
+        <h3>4. College Tier Impact on Salary</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="analysis-images/10_college_tier.png" alt="Salary by College Tier">
+                <figcaption>Left: Median salary by tier. Right: Graduate count by tier.</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Test</th><th>Statistic</th><th>p-value</th><th>Effect Size</th></tr>
+            <tr><td>Welch's t-test (Tier 1 vs Tier 2)</td><td>t = 6.471</td><td>5.49 &times; 10<sup>&minus;10</sup></td><td>Cohen's d = <strong>0.530</strong> <span class="badge badge-green">Medium</span></td></tr>
+        </table>
+        <p style="margin-top:.6rem;">Tier-1 college graduates earn significantly more on average, with a medium effect size. However, this does not imply causation &mdash; tier-1 colleges may attract higher-aptitude students and offer better placement networks.</p>
+    </div>
+
+    <!-- Categorical distributions -->
+    <div class="card">
+        <h3>5. Categorical Distributions</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="data-images/download (14).png" alt="Gender Distribution">
+                <figcaption>Gender distribution: Male graduates (76.1%) vastly outnumber female (23.9%)</figcaption>
+            </figure>
+            <figure>
+                <img src="data-images/download (15).png" alt="Degree Type Distribution">
+                <figcaption>Degree Type: B.Tech/B.E. accounts for 92% of the sample</figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     STATISTICAL TESTS DEEP DIVE
+     ═══════════════════════════════ -->
+<section>
+    <h2>Statistical Tests &amp; P-Values</h2>
+
+    <div class="methodology-note">
+        <strong>Reporting standard:</strong> All p-values are reported with exact values (not just &lt; 0.05). Effect sizes (Cohen's d, &eta;&sup2;, r) are reported alongside significance tests, because statistical significance alone is insufficient with n = 2,998. A tiny effect can be &ldquo;significant&rdquo; with large n.
+    </div>
+
+    <!-- T-tests -->
+    <div class="card">
+        <h3>A. One-Sample T-Tests: Skills vs Reference Value</h3>
+        <p>Each skill/aptitude feature tested against a reference value. Note: scores have different scales (personality ~0, aptitude ~500, technical skills ~0&ndash;350), so the reference &mu; = 70 is only meaningful for percentage-scale features.</p>
+        <table>
+            <tr><th>Feature</th><th>Mean</th><th>t-statistic</th><th>p-value</th><th>Direction</th></tr>
+            <tr><td>QuantitativeAptitudeScore</td><td>514.1</td><td>199.0</td><td>&lt; 10<sup>&minus;300</sup></td><td><span class="badge badge-green">Well above 70</span></td></tr>
+            <tr><td>LogicalReasoningScore</td><td>500.4</td><td>270.0</td><td>&lt; 10<sup>&minus;300</sup></td><td><span class="badge badge-green">Well above 70</span></td></tr>
+            <tr><td>EnglishScore</td><td>501.1</td><td>224.1</td><td>&lt; 10<sup>&minus;300</sup></td><td><span class="badge badge-green">Well above 70</span></td></tr>
+            <tr><td>ProgrammingSkills</td><td>351.9</td><td>75.5</td><td>&lt; 10<sup>&minus;300</sup></td><td><span class="badge badge-green">Above 70</span></td></tr>
+            <tr><td>ElectronicsAndSemiconSkills</td><td>96.2</td><td>9.05</td><td>2.58 &times; 10<sup>&minus;19</sup></td><td><span class="badge badge-green">Above 70</span></td></tr>
+            <tr><td>ComputerScienceSkills</td><td>94.2</td><td>7.44</td><td>1.34 &times; 10<sup>&minus;13</sup></td><td><span class="badge badge-green">Above 70</span></td></tr>
+            <tr><td>MechanicalEnggSkills</td><td>24.1</td><td>&minus;25.2</td><td>6.14 &times; 10<sup>&minus;127</sup></td><td><span class="badge badge-red">Below 70</span></td></tr>
+            <tr><td>ElectricalEnggSkills</td><td>16.3</td><td>&minus;34.2</td><td>1.35 &times; 10<sup>&minus;216</sup></td><td><span class="badge badge-red">Below 70</span></td></tr>
+            <tr><td>TelecomEnggSkills</td><td>31.1</td><td>&minus;20.6</td><td>3.55 &times; 10<sup>&minus;88</sup></td><td><span class="badge badge-red">Below 70</span></td></tr>
+            <tr><td>CivilEnggSkills</td><td>2.0</td><td>&minus;115.6</td><td>&lt; 10<sup>&minus;300</sup></td><td><span class="badge badge-red">Far below 70</span></td></tr>
+        </table>
+        <div class="methodology-note">
+            <strong>Caveat:</strong> The personality traits (conscientiousness, agreeableness, etc.) are on a standardised scale centered near 0, not 0&ndash;100. Testing them against &mu; = 70 is not meaningful and has been excluded from this table. Only features on comparable scales are reported.
+        </div>
+    </div>
+
+    <!-- Chi-Square -->
+    <div class="card">
+        <h3>B. Chi-Square Goodness-of-Fit (Categorical Feature Balance)</h3>
+        <p>Tests whether categorical distributions follow a uniform pattern:</p>
+        <table>
+            <tr><th>Feature</th><th>&chi;&sup2;</th><th>p-value</th><th>Dominant Category</th><th>%</th></tr>
+            <tr><td>Gender</td><td>818.0</td><td>6.59 &times; 10<sup>&minus;180</sup></td><td>Male</td><td>76.1%</td></tr>
+            <tr><td>10th Board</td><td>141,289</td><td>&lt; 10<sup>&minus;300</sup></td><td>CBSE</td><td>34.2%</td></tr>
+            <tr><td>12th Board</td><td>188,058</td><td>&lt; 10<sup>&minus;300</sup></td><td>CBSE</td><td>34.7%</td></tr>
+            <tr><td>DegreeType</td><td>7,199</td><td>&lt; 10<sup>&minus;300</sup></td><td>B.Tech/B.E.</td><td>92.0%</td></tr>
+            <tr><td>MajorSpecialization</td><td>15,047</td><td>&lt; 10<sup>&minus;300</sup></td><td>ECE</td><td>22.3%</td></tr>
+            <tr><td>CollegeState</td><td>4,802</td><td>&lt; 10<sup>&minus;300</sup></td><td>Uttar Pradesh</td><td>23.3%</td></tr>
+        </table>
+        <p style="margin-top:.8rem;"><strong>Interpretation:</strong> Massive imbalances exist in every categorical feature. This reflects structural realities of Indian engineering: male-dominated, B.Tech-centric, heavily concentrated in UP, Delhi, and Karnataka.</p>
+    </div>
+
+    <!-- ANOVA -->
+    <div class="card">
+        <h3>C. One-Way ANOVA: Salary by Categorical Groups</h3>
+        <table>
+            <tr><th>Factor</th><th>F-statistic</th><th>p-value</th><th>&eta;&sup2; (Effect Size)</th><th>Verdict</th></tr>
+            <tr><td>IndustryDomain</td><td>3.412</td><td>8.64 &times; 10<sup>&minus;25</sup></td><td><strong>0.103</strong></td><td><span class="badge badge-green">Significant, medium effect</span></td></tr>
+            <tr><td>MajorSpecialization</td><td>5.358</td><td>1.70 &times; 10<sup>&minus;12</sup></td><td><strong>0.032</strong></td><td><span class="badge badge-green">Significant, small effect</span></td></tr>
+            <tr><td>CollegeState</td><td>2.125</td><td>3.06 &times; 10<sup>&minus;3</sup></td><td>0.013</td><td><span class="badge badge-orange">Significant, tiny effect</span></td></tr>
+            <tr><td>Gender</td><td>4.548</td><td>0.033</td><td>0.002</td><td><span class="badge badge-orange">Significant, negligible effect</span></td></tr>
+            <tr><td>DegreeType</td><td>2.013</td><td>0.134</td><td>0.001</td><td><span class="badge badge-red">Not significant</span></td></tr>
+        </table>
+        <div class="insight-note">
+            <strong>Key takeaway:</strong> IndustryDomain is the strongest categorical predictor (&eta;&sup2; = 0.103), meaning the industry a graduate enters matters more for salary than their degree type, gender, or even college state. DegreeType (B.Tech vs B.E. vs M.Tech) shows <em>no significant salary difference</em> (p = 0.134).
+        </div>
+    </div>
+
+    <!-- Gender Analysis -->
+    <div class="card">
+        <h3>D. Gender Salary Gap Analysis</h3>
+        <table>
+            <tr><th>Group</th><th>n</th><th>Mean Salary</th></tr>
+            <tr><td>Male</td><td>2,281</td><td>&#8377;3,09,805</td></tr>
+            <tr><td>Female</td><td>717</td><td>&#8377;2,90,419</td></tr>
+        </table>
+        <table style="margin-top:.5rem;">
+            <tr><th>Test</th><th>Statistic</th><th>p-value</th><th>Effect Size</th></tr>
+            <tr><td>Welch's t-test</td><td>t = 2.290</td><td>0.022</td><td>Cohen's d = <strong>0.095</strong> <span class="badge badge-orange">Negligible</span></td></tr>
+        </table>
+        <p style="margin-top:.6rem;">While statistically significant (p = 0.022), the effect size is negligible (d = 0.095). The ~&#8377;19,000 mean gap (~6.5%) likely conflates with specialization and industry choices rather than reflecting a direct gender bias in this dataset.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     ML MODELS (REGRESSION)
+     ═══════════════════════════════ -->
+<section>
+    <h2>Machine Learning Models: Predicting Starting Salary</h2>
+
+    <div class="card" style="border-left:4px solid var(--accent);">
+        <h3>Why ML? Justification for Model Inclusion</h3>
+        <p>Individual correlations with salary are weak (max r = 0.239). However, salary is influenced by <em>many variables simultaneously</em> &mdash; aptitude scores, academic background, college tier, specialization, industry domain, and geographic factors. An ML model captures these <strong>joint, non-linear interactions</strong> that individual correlations miss.</p>
+        <ul style="margin-top:.5rem; font-size:.93rem;">
+            <li><strong>RF R&sup2; = 0.257</strong> means all features together explain ~25.7% of log-salary variance &mdash; substantially more than any single feature alone.</li>
+            <li>The model also reveals <strong>feature importances</strong> that rank all predictors objectively.</li>
+            <li>The moderate R&sup2; is itself informative: it tells us that <strong>~74% of salary variation is driven by factors not in this dataset</strong> (company-specific pay, negotiation, location cost-of-living, internship experience, etc.).</li>
+        </ul>
+    </div>
+
+    <!-- Model Comparison -->
+    <div class="card">
+        <h3>Model Comparison</h3>
+        <div class="img-grid" style="grid-template-columns:1fr;max-width:800px;margin:0 auto;">
+            <figure>
+                <img src="analysis-images/08_model_comparison.png" alt="Model Comparison Bar Chart">
+                <figcaption>Test R&sup2; (left) and 5-Fold CV R&sup2; with error bars (right) for all four models</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Model</th><th>Test R&sup2;</th><th>CV R&sup2; (mean &plusmn; std)</th><th>RMSE (log)</th><th>MAE (&#8377;)</th><th>MAPE</th></tr>
+            <tr style="background:#e8f5e9;"><td><strong>Random Forest</strong></td><td><strong>0.257</strong></td><td><strong>0.246 &plusmn; 0.031</strong></td><td>0.449</td><td>&#8377;96,799</td><td>37.9%</td></tr>
+            <tr style="background:#e8f5e9;"><td><strong>XGBoost</strong></td><td>0.240</td><td><strong>0.255 &plusmn; 0.029</strong></td><td>0.454</td><td>&#8377;95,565</td><td>38.0%</td></tr>
+            <tr><td>Linear Regression</td><td>0.203</td><td>Unstable*</td><td>0.465</td><td>&#8377;1,01,536</td><td>39.9%</td></tr>
+            <tr><td>ElasticNet</td><td>0.196</td><td>Unstable*</td><td>0.467</td><td>&#8377;1,02,899</td><td>40.2%</td></tr>
+        </table>
+        <p style="font-size:.85rem; color:var(--muted); margin-top:.5rem;">*Linear models show highly negative CV scores due to multicollinearity from one-hot encoded categories. Tree models handle this naturally.</p>
+        <div class="insight-note">
+            <strong>Best performing models:</strong> RF and XGBoost are effectively tied (CV R&sup2; difference is within noise). Both substantially outperform linear baselines. XGBoost has a marginally better CV score (0.255 vs 0.246) but RF has better test-set R&sup2; (0.257 vs 0.240).
+        </div>
+    </div>
+
+    <!-- Feature Importance -->
+    <div class="card">
+        <h3>Random Forest Feature Importances</h3>
+        <div class="img-grid" style="grid-template-columns:1fr;max-width:800px;margin:0 auto;">
+            <figure>
+                <img src="analysis-images/06_rf_feature_importance.png" alt="RF Feature Importance">
+                <figcaption>Top 20 features by Random Forest impurity-based importance (predicting log salary)</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>#</th><th>Feature</th><th>Importance</th><th>Notes</th></tr>
+            <tr><td>1</td><td><strong>CognitiveScore</strong></td><td><strong>12.7%</strong></td><td>Engineered: avg(Quant + Logical + English)</td></tr>
+            <tr><td>2</td><td>QuantitativeAptitudeScore</td><td>6.4%</td><td>Strongest raw aptitude feature</td></tr>
+            <tr><td>3</td><td>HighSchool10thPercentage</td><td>6.0%</td><td>Early academic signal</td></tr>
+            <tr><td>4</td><td>GraduationYear</td><td>5.8%</td><td>Temporal/cohort effect</td></tr>
+            <tr><td>5</td><td>TechInteraction</td><td>5.5%</td><td>Engineered: Programming &times; Quant</td></tr>
+            <tr><td>6</td><td>HighSchool12thPercentage</td><td>5.1%</td><td>Consistent with 10th%</td></tr>
+            <tr><td>7</td><td>AcademicStrength</td><td>4.6%</td><td>Engineered: avg(10th + 12th + GPA&times;10)</td></tr>
+            <tr><td>8</td><td>collegeGPA</td><td><strong>3.5%</strong></td><td><span class="badge badge-orange">Ranks 8th, not 1st</span></td></tr>
+        </table>
+        <div class="insight-note">
+            <strong>Headline finding:</strong> The <strong>CognitiveScore composite</strong> (aptitude + reasoning + English) is the single most important feature, twice as important as any individual raw feature. College GPA ranks only 8th. Engineered features (CognitiveScore, TechInteraction, AcademicStrength) account for ~23% of total importance, validating the feature engineering step in the SKIDGE methodology.
+        </div>
+    </div>
+
+    <!-- Predicted vs Actual -->
+    <div class="card">
+        <h3>Model Diagnostics: Predicted vs Actual &amp; Residuals</h3>
+        <div class="img-grid">
+            <figure>
+                <img src="analysis-images/07_rf_predictions.png" alt="RF Predicted vs Actual and Residuals">
+                <figcaption>Left: Predicted vs actual log(salary) with R&sup2; = 0.257. Right: Residual plot showing no systematic bias.</figcaption>
+            </figure>
+        </div>
+        <p>The residual plot shows random scatter around zero with no fan-shaped pattern, indicating the model does not systematically over- or under-predict at any salary level. The spread is consistent (homoscedasticity on the log scale).</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PART B: JOB MARKET
+     ═══════════════════════════════════════════════════ -->
+<section>
+    <h2>Part B &mdash; India Job Market Analysis (Indeed, Oct&ndash;Dec 2021)</h2>
+
+    <div class="card">
+        <h3>1. Top 20 In-Demand Skills</h3>
+        <div class="img-grid" style="grid-template-columns:1fr; max-width:800px; margin:0 auto;">
+            <figure>
+                <img src="analysis-images/11_top_skills.png" alt="Top 20 Skills">
+                <figcaption>Skills extracted from 30,000 job descriptions by keyword frequency</figcaption>
+            </figure>
+        </div>
+        <table>
+            <tr><th>Rank</th><th>Skill</th><th>Postings</th><th>% of Jobs</th></tr>
+            <tr><td>1</td><td><strong>Communication</strong></td><td>13,249</td><td>44.2%</td></tr>
+            <tr><td>2</td><td>Agile</td><td>3,825</td><td>12.8%</td></tr>
+            <tr><td>3</td><td>Leadership</td><td>3,501</td><td>11.7%</td></tr>
+            <tr><td>4</td><td>SQL</td><td>3,376</td><td>11.3%</td></tr>
+            <tr><td>5</td><td>Excel</td><td>3,316</td><td>11.1%</td></tr>
+            <tr><td>6</td><td>Java</td><td>3,151</td><td>10.5%</td></tr>
+            <tr><td>7</td><td>JavaScript</td><td>2,408</td><td>8.0%</td></tr>
+            <tr><td>8</td><td>Python</td><td>2,200</td><td>7.3%</td></tr>
+            <tr><td>9</td><td>Project Management</td><td>1,757</td><td>5.9%</td></tr>
+            <tr><td>10</td><td>CSS</td><td>1,738</td><td>5.8%</td></tr>
+        </table>
+        <p style="margin-top:.8rem;"><strong>Key finding:</strong> Communication dominates at 44.2% &mdash; nearly 4&times; the next skill. This is the #1 skill gap: the graduate dataset measures aptitude and technical skill but has <strong>no communication metric</strong>.</p>
+    </div>
+
+    <div class="card">
+        <h3>2. Skill Co-occurrence &amp; Clustering</h3>
+        <div class="img-grid" style="grid-template-columns:1fr; max-width:700px; margin:0 auto;">
+            <figure>
+                <img src="analysis-images/12_skill_correlation.png" alt="Skill Correlation Heatmap">
+                <figcaption>Phi correlation between top 15 skills across 30K job postings</figcaption>
+            </figure>
+        </div>
+        <p style="margin-top:1rem;"><strong>Skill clusters identified:</strong></p>
+        <ul>
+            <li><strong>Web Development:</strong> JavaScript, HTML, CSS, React, Angular (r = 0.30&ndash;0.73)</li>
+            <li><strong>DevOps/Methodology:</strong> Agile, Scrum, Git, Linux (r = 0.15&ndash;0.35)</li>
+            <li><strong>Data Stack:</strong> Python, SQL, AWS (r = 0.10&ndash;0.25)</li>
+            <li><strong>Soft Skills:</strong> Communication, Leadership, Project Management (r = 0.06&ndash;0.19)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>3. Chi-Square: Skills Significantly Associated with Job Types</h3>
+        <table>
+            <tr><th>Skill</th><th>&chi;&sup2;</th><th>p-value</th><th>Verdict</th></tr>
+            <tr><td>Agile</td><td>613.6</td><td>1.60 &times; 10<sup>&minus;65</sup></td><td><span class="badge badge-green">Highly significant</span></td></tr>
+            <tr><td>Leadership</td><td>488.0</td><td>2.42 &times; 10<sup>&minus;44</sup></td><td><span class="badge badge-green">Highly significant</span></td></tr>
+            <tr><td>SQL</td><td>458.2</td><td>1.52 &times; 10<sup>&minus;39</sup></td><td><span class="badge badge-green">Highly significant</span></td></tr>
+            <tr><td>Communication</td><td>428.3</td><td>7.67 &times; 10<sup>&minus;35</sup></td><td><span class="badge badge-green">Highly significant</span></td></tr>
+            <tr><td>Java</td><td>401.3</td><td>1.03 &times; 10<sup>&minus;30</sup></td><td><span class="badge badge-green">Highly significant</span></td></tr>
+            <tr><td>Python</td><td>276.4</td><td>1.88 &times; 10<sup>&minus;13</sup></td><td><span class="badge badge-green">Highly significant</span></td></tr>
+            <tr><td>Project Management</td><td>260.1</td><td>1.62 &times; 10<sup>&minus;11</sup></td><td><span class="badge badge-green">Highly significant</span></td></tr>
+            <tr><td>JavaScript</td><td>220.2</td><td>3.18 &times; 10<sup>&minus;7</sup></td><td><span class="badge badge-green">Significant</span></td></tr>
+            <tr><td>Excel</td><td>214.0</td><td>1.24 &times; 10<sup>&minus;6</sup></td><td><span class="badge badge-green">Significant</span></td></tr>
+            <tr><td>CSS</td><td>184.0</td><td>4.71 &times; 10<sup>&minus;4</sup></td><td><span class="badge badge-green">Significant</span></td></tr>
+        </table>
+        <p style="margin-top:.5rem;">All top skills are significantly associated with job type (full-time, part-time, contract, intern). Agile methodology shows the strongest association (&chi;&sup2; = 613.6), indicating it is highly concentrated in specific job categories.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     GAP ANALYSIS
+     ═══════════════════════════════ -->
+<section>
+    <h2>Graduate&ndash;Market Gap Analysis</h2>
+
+    <div class="card">
+        <h3>Critical Mismatches</h3>
+        <table>
+            <tr><th>What Industry Demands</th><th>What the Graduate Dataset Measures</th><th>Gap</th></tr>
+            <tr>
+                <td>Communication (44.2% of jobs)</td>
+                <td>No communication metric in dataset</td>
+                <td><span class="badge badge-red">Critical &mdash; unmeasured</span></td>
+            </tr>
+            <tr>
+                <td>Agile/Scrum (12.8% + 3.8%)</td>
+                <td>Not assessed</td>
+                <td><span class="badge badge-red">Critical &mdash; unmeasured</span></td>
+            </tr>
+            <tr>
+                <td>SQL (11.3%), Python (7.3%)</td>
+                <td>Generic &ldquo;ProgrammingSkills&rdquo; score only</td>
+                <td><span class="badge badge-orange">Partially covered</span></td>
+            </tr>
+            <tr>
+                <td>Cloud/DevOps (AWS, Docker, K8s)</td>
+                <td>Not in curriculum assessments</td>
+                <td><span class="badge badge-red">Critical &mdash; unmeasured</span></td>
+            </tr>
+            <tr>
+                <td>Quantitative aptitude + reasoning</td>
+                <td>Measured and strong salary predictors</td>
+                <td><span class="badge badge-green">Well aligned</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Recommendations (Evidence-Based)</h3>
+        <ul style="font-size:.95rem;">
+            <li><strong>De-emphasise GPA as primary hiring filter:</strong> Pearson r = 0.132 with salary; GPA ranks only 8th in RF feature importance. Use aptitude assessment instead.</li>
+            <li><strong>Prioritise cognitive aptitude training:</strong> The CognitiveScore composite (aptitude + reasoning + English) is the #1 salary predictor (12.7% importance). Universities should invest in structured aptitude development.</li>
+            <li><strong>Embed communication skills:</strong> 44.2% of job postings require communication but it is completely unmeasured in the graduate dataset. This is the largest identifiable gap.</li>
+            <li><strong>Introduce industry-tool training:</strong> SQL (11.3%), Agile (12.8%), AWS (5.3%) are high-demand but absent from engineering curricula assessments.</li>
+            <li><strong>Measure what matters:</strong> The current assessment system captures GPA (weak predictor) and personality (near-zero predictor) but misses communication, teamwork, and tool proficiency.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     PLATFORM COMPARISON TABLE
+     ═══════════════════════════════ -->
+<section>
+    <h2>Platform Comparison: Bridging the Skills Gap</h2>
+
+    <div class="card">
+        <h3>Online Learning Platforms for Identified Skill Gaps</h3>
+        <p style="margin-bottom:1rem;">Based on the gap analysis above, these platforms offer targeted upskilling for the specific deficiencies identified. This comparison is informational and based on publicly available data.</p>
+        <table>
+            <tr>
+                <th>Platform</th>
+                <th>Communication &amp; Soft Skills</th>
+                <th>SQL / Data Skills</th>
+                <th>Cloud / DevOps</th>
+                <th>Agile / PM</th>
+                <th>Pricing Model</th>
+                <th>Certificate Value</th>
+            </tr>
+            <tr>
+                <td><strong>Coursera</strong></td>
+                <td>University-accredited courses (e.g., Rice, Georgia Tech)</td>
+                <td>Google Data Analytics Certificate; IBM SQL courses</td>
+                <td>AWS Cloud Practitioner; GCP Professional certs</td>
+                <td>Google Project Management Certificate</td>
+                <td>Free audit / $49&ndash;79/mo; Financial aid available</td>
+                <td><span class="badge badge-green">High</span> &mdash; university-backed</td>
+            </tr>
+            <tr>
+                <td><strong>Udemy</strong></td>
+                <td>Broad catalogue, variable quality; top-rated bootcamps</td>
+                <td>Complete SQL Bootcamp (500K+ students)</td>
+                <td>AWS Solutions Architect prep; Docker Mastery</td>
+                <td>Agile/Scrum courses; PMP prep</td>
+                <td>Pay-per-course ($10&ndash;30 on sale)</td>
+                <td><span class="badge badge-orange">Moderate</span> &mdash; completion certs only</td>
+            </tr>
+            <tr>
+                <td><strong>Udacity</strong></td>
+                <td>Limited soft skills catalogue</td>
+                <td>Data Analyst Nanodegree (SQL-heavy)</td>
+                <td>AWS ML Specialty; Cloud Developer Nanodegree</td>
+                <td>Product Manager Nanodegree</td>
+                <td>$249&ndash;399/mo; Project-based</td>
+                <td><span class="badge badge-green">High</span> &mdash; industry-partnered</td>
+            </tr>
+            <tr>
+                <td><strong>edX</strong></td>
+                <td>MIT/Harvard communication courses; Professional Certificates</td>
+                <td>IBM Data Science Professional Certificate</td>
+                <td>AWS training; Linux Foundation courses</td>
+                <td>RIT Project Management MicroMasters</td>
+                <td>Free audit / $50&ndash;300 verified; MicroMasters $600&ndash;1,500</td>
+                <td><span class="badge badge-green">High</span> &mdash; credit-eligible</td>
+            </tr>
+        </table>
+        <div class="methodology-note">
+            <strong>Recommendation mapping:</strong>
+            <ul style="margin-top:.5rem; font-size:.9rem;">
+                <li><strong>Communication gap (44.2% of jobs):</strong> Coursera and edX offer university-accredited communication courses most relevant to engineering professionals.</li>
+                <li><strong>SQL/Data gap (11.3% of jobs):</strong> Udemy for cost-effective foundational SQL; Coursera/edX for certificate programmes recognised by recruiters.</li>
+                <li><strong>Cloud/DevOps gap (AWS 5.3%, Docker, K8s):</strong> Udacity for deep project-based learning; Coursera for vendor-certified paths.</li>
+                <li><strong>Agile/PM gap (12.8% of jobs):</strong> All four platforms cover this; Coursera's Google PM Certificate is the most widely recognised.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     ETHICAL CONSIDERATIONS
+     ═══════════════════════════════ -->
+<section>
+    <h2>Ethical Considerations</h2>
+
+    <div class="card" style="border-left:4px solid var(--secondary);">
+        <h3>Data Ethics &amp; Limitations</h3>
+        <ul style="font-size:.95rem; line-height:1.9;">
+            <li><strong>Gender imbalance:</strong> The dataset is 76.1% male, reflecting systemic under-representation of women in Indian engineering. Results may not generalise equally to female graduates. The small gender salary gap (d = 0.095) should not be interpreted as evidence that gender equity has been achieved &mdash; it may reflect survivorship bias (women who persist in engineering may be more academically selected).</li>
+            <li><strong>Geographic bias:</strong> 23.3% of graduates from Uttar Pradesh, with heavy concentration in a few states. Graduates from under-represented states (e.g., Northeast India) may experience different outcomes not captured here.</li>
+            <li><strong>Temporal limitations:</strong> Graduate data has no explicit collection date; job postings are from Oct&ndash;Dec 2021. The job market has shifted substantially post-COVID and with AI/LLM growth. Results represent a <em>snapshot</em>, not a forecast.</li>
+            <li><strong>Causal inference:</strong> All relationships reported are <em>correlational</em>. The RF model with R&sup2; = 0.257 predicts salary associations but does not establish causation. Higher aptitude scores may correlate with, but not <em>cause</em>, higher salaries &mdash; confounders like family background, social networks, and location are unmeasured.</li>
+            <li><strong>Privacy:</strong> Student_ID, CollegeID, and CollegeCityID were removed before analysis. No individual is identifiable in this report.</li>
+            <li><strong>Algorithm fairness:</strong> The RF model was not audited for disparate impact across gender, caste, or socioeconomic groups. Deploying such a model in hiring would require fairness testing under applicable regulations.</li>
+            <li><strong>Salary as proxy:</strong> Starting salary is used as the outcome variable, but it is a narrow measure of career success. It does not capture job satisfaction, growth trajectory, work-life balance, or societal contribution.</li>
+            <li><strong>Skill keyword extraction:</strong> Job skills were identified by simple keyword matching in job descriptions. This over-counts generic terms (e.g., &ldquo;Communication&rdquo;) and under-counts skills described indirectly.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Responsible Use Guidelines</h3>
+        <ul style="font-size:.95rem;">
+            <li>This analysis should <strong>not</strong> be used as the sole basis for hiring, admissions, or policy decisions.</li>
+            <li>ML model predictions should be treated as <strong>one input among many</strong>, not as deterministic outcomes.</li>
+            <li>Any deployment of predictive salary models must include fairness audits across protected characteristics.</li>
+            <li>The platform comparison table is informational, not an endorsement. Course quality varies and should be evaluated independently.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     SUMMARY TABLE
+     ═══════════════════════════════ -->
+<section>
+    <h2>Summary of All Statistical Tests</h2>
+    <div class="card">
+        <table>
+            <tr><th>#</th><th>Test</th><th>Applied To</th><th>Key Result</th><th>Effect Size</th></tr>
+            <tr><td>1</td><td>Pearson Correlation</td><td>GPA vs Salary</td><td>r = 0.132, p = 4.13 &times; 10<sup>&minus;13</sup></td><td>r&sup2; = 0.017 (trivial)</td></tr>
+            <tr><td>2</td><td>Spearman Correlation</td><td>GPA vs Salary</td><td>&rho; = 0.230, p = 3.50 &times; 10<sup>&minus;37</sup></td><td>Weak monotonic</td></tr>
+            <tr><td>3</td><td>One-sample t-tests</td><td>10 skill features vs &mu; = 70</td><td>All p &lt; 10<sup>&minus;13</sup></td><td>Large t-values</td></tr>
+            <tr><td>4</td><td>Chi-square GoF</td><td>6 categorical features</td><td>All p &lt; 10<sup>&minus;100</sup></td><td>Massive imbalances</td></tr>
+            <tr><td>5</td><td>One-way ANOVA</td><td>Salary by IndustryDomain</td><td>F = 3.41, p = 8.64 &times; 10<sup>&minus;25</sup></td><td>&eta;&sup2; = 0.103 (medium)</td></tr>
+            <tr><td>6</td><td>One-way ANOVA</td><td>Salary by Specialization</td><td>F = 5.36, p = 1.70 &times; 10<sup>&minus;12</sup></td><td>&eta;&sup2; = 0.032 (small)</td></tr>
+            <tr><td>7</td><td>Welch's t-test</td><td>College Tier 1 vs 2</td><td>t = 6.47, p = 5.49 &times; 10<sup>&minus;10</sup></td><td>d = 0.530 (medium)</td></tr>
+            <tr><td>8</td><td>Welch's t-test</td><td>Male vs Female salary</td><td>t = 2.29, p = 0.022</td><td>d = 0.095 (negligible)</td></tr>
+            <tr><td>9</td><td>Correlation analysis</td><td>Personality vs Skills</td><td>All |r| &lt; 0.191</td><td>Negligible</td></tr>
+            <tr><td>10</td><td>Chi-square independence</td><td>Skills vs Job Type (Indeed)</td><td>Agile &chi;&sup2; = 614, Leadership 488, SQL 458</td><td>All p &lt; 10<sup>&minus;6</sup></td></tr>
+            <tr><td>11</td><td>RF Regressor</td><td>Predicting log(Salary)</td><td>R&sup2; = 0.257, CV = 0.246 &plusmn; 0.031</td><td>MAPE = 37.9%</td></tr>
+            <tr><td>12</td><td>XGBoost Regressor</td><td>Predicting log(Salary)</td><td>R&sup2; = 0.240, CV = 0.255 &plusmn; 0.029</td><td>MAPE = 38.0%</td></tr>
+        </table>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════
+     CLOSING NARRATIVE
+     ═══════════════════════════════ -->
+<section>
+    <h2>Conclusion</h2>
+    <div class="card" style="border-left:4px solid var(--primary);">
+        <ol style="padding-left:1.3rem;font-size:.97rem;line-height:1.9;">
+            <li><strong>GPA is a poor salary predictor</strong> (r = 0.132, R&sup2; = 1.7%). College grades explain virtually none of the variation in starting salary.</li>
+            <li><strong>Personality traits are orthogonal to skill</strong> (max |r| = 0.191). The Big Five add no predictive value for academic or technical performance.</li>
+            <li><strong>Cognitive aptitude is the strongest measurable predictor.</strong> The CognitiveScore composite (12.7% feature importance) and QuantitativeAptitudeScore (r = 0.239 with salary) consistently emerge as top signals.</li>
+            <li><strong>Industry domain matters most at the group level</strong> (&eta;&sup2; = 0.103). Which industry a graduate enters has a larger effect on salary than their degree type, college state, or gender.</li>
+            <li><strong>~74% of salary variance is unexplained</strong> by the features in this dataset. External factors (company, location, interview performance, networks, luck) dominate real salary determination.</li>
+            <li><strong>The job market demands skills universities don't measure:</strong> Communication (44.2%), Agile (12.8%), SQL (11.3%), and cloud tools are the most demanded but completely absent from graduate assessments.</li>
+        </ol>
+        <p style="margin-top:1rem;font-weight:600;">Bottom line: The current engineering education assessment system in India measures the wrong things (GPA, personality) while ignoring measurable aptitude and entirely missing the soft and technical skills the job market demands. Closing this gap requires curriculum reform, industry-aligned assessment, and adoption of platforms that teach what actually matters.</p>
+    </div>
+</section>
+
+</div>
+
+<footer>
+    SKIDGE Research Report &bull; Data Sources: Engineering Graduate Professional Outcomes Dataset &amp; Indeed India Job Postings (Oct&ndash;Dec 2021) &bull; Corrected Regression Methodology &bull; Generated Feb 2026
+</footer>
+
+</body>
+</html>

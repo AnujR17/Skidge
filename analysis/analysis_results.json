@@ -1,0 +1,445 @@
+{
+  "n_graduates": 2998,
+  "n_features": 34,
+  "salary_mean": 305174.78,
+  "salary_median": 300000.0,
+  "salary_std": 212331.19,
+  "salary_min": 35000,
+  "salary_max": 4000000,
+  "salary_skew": 6.965,
+  "gpa_mean": 71.51,
+  "gpa_std": 8.12,
+  "log_salary_shapiro_stat": 0.9771,
+  "log_salary_shapiro_p": "1.4948e-21",
+  "log_salary_dagostino_stat": 64.052,
+  "log_salary_dagostino_p": "1.2339e-14",
+  "log_salary_skew": -0.1279,
+  "top_salary_correlations": {
+    "QuantitativeAptitudeScore": 0.2393,
+    "LogicalReasoningScore": 0.1936,
+    "HighSchool10thPercentage": 0.1814,
+    "EnglishScore": 0.1797,
+    "HighSchool12thPercentage": 0.1728,
+    "ProgrammingSkills": 0.1342,
+    "IndustryDomain": 0.1328,
+    "collegeGPA": 0.1319,
+    "agreeablenessScore": 0.0748,
+    "MechanicalEnggSkills": 0.0323
+  },
+  "gpa_salary_corr": 0.1319,
+  "gpa_salary_r_squared": 0.0174,
+  "max_personality_skill_corr": 0.1914,
+  "ttest_results": [
+    {
+      "feature": "EnglishScore",
+      "t_stat": 224.137,
+      "p_value": "0.0000e+00",
+      "mean": 501.07,
+      "direction": "Above",
+      "significant": "True"
+    },
+    {
+      "feature": "LogicalReasoningScore",
+      "t_stat": 269.964,
+      "p_value": "0.0000e+00",
+      "mean": 500.43,
+      "direction": "Above",
+      "significant": "True"
+    },
+    {
+      "feature": "QuantitativeAptitudeScore",
+      "t_stat": 199.012,
+      "p_value": "0.0000e+00",
+      "mean": 514.14,
+      "direction": "Above",
+      "significant": "True"
+    },
+    {
+      "feature": "ProgrammingSkills",
+      "t_stat": 75.459,
+      "p_value": "0.0000e+00",
+      "mean": 351.87,
+      "direction": "Above",
+      "significant": "True"
+    },
+    {
+      "feature": "ElectronicsAndSemiconSkills",
+      "t_stat": 9.047,
+      "p_value": "2.5790e-19",
+      "mean": 96.23,
+      "direction": "Above",
+      "significant": "True"
+    },
+    {
+      "feature": "ComputerScienceSkills",
+      "t_stat": 7.437,
+      "p_value": "1.3392e-13",
+      "mean": 94.15,
+      "direction": "Above",
+      "significant": "True"
+    },
+    {
+      "feature": "MechanicalEnggSkills",
+      "t_stat": -25.165,
+      "p_value": "6.1373e-127",
+      "mean": 24.14,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "ElectricalEnggSkills",
+      "t_stat": -34.188,
+      "p_value": "1.3546e-216",
+      "mean": 16.27,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "TelecomEnggSkills",
+      "t_stat": -20.585,
+      "p_value": "3.5479e-88",
+      "mean": 31.07,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "CivilEnggSkills",
+      "t_stat": -115.571,
+      "p_value": "0.0000e+00",
+      "mean": 1.95,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "conscientiousnessScore",
+      "t_stat": -3741.46,
+      "p_value": "0.0000e+00",
+      "mean": -0.04,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "agreeablenessScore",
+      "t_stat": -4002.663,
+      "p_value": "0.0000e+00",
+      "mean": 0.13,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "extraversionScore",
+      "t_stat": -3981.794,
+      "p_value": "0.0000e+00",
+      "mean": -0.01,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "nueroticismScore",
+      "t_stat": -3791.852,
+      "p_value": "0.0000e+00",
+      "mean": -0.15,
+      "direction": "Below",
+      "significant": "True"
+    },
+    {
+      "feature": "openess_to_experienceScore",
+      "t_stat": -3813.302,
+      "p_value": "0.0000e+00",
+      "mean": -0.14,
+      "direction": "Below",
+      "significant": "True"
+    }
+  ],
+  "pearson_gpa_salary_r": 0.1319,
+  "pearson_gpa_salary_p": "4.1255e-13",
+  "spearman_gpa_salary_rho": 0.2297,
+  "spearman_gpa_salary_p": "3.4991e-37",
+  "chi2_results": [
+    {
+      "feature": "Gender",
+      "chi2": 818.0,
+      "p_value": "6.5943e-180",
+      "n_categories": 2,
+      "dominant": "m",
+      "dominant_pct": 76.1
+    },
+    {
+      "feature": "HighSchool10thBoard",
+      "chi2": 141288.8,
+      "p_value": "0.0000e+00",
+      "n_categories": 221,
+      "dominant": "cbse",
+      "dominant_pct": 34.2
+    },
+    {
+      "feature": "HighSchool12thBoard",
+      "chi2": 188058.3,
+      "p_value": "0.0000e+00",
+      "n_categories": 277,
+      "dominant": "cbse",
+      "dominant_pct": 34.7
+    },
+    {
+      "feature": "DegreeType",
+      "chi2": 7199.0,
+      "p_value": "0.0000e+00",
+      "n_categories": 4,
+      "dominant": "B.Tech/B.E.",
+      "dominant_pct": 92.0
+    },
+    {
+      "feature": "MajorSpecialization",
+      "chi2": 15047.2,
+      "p_value": "0.0000e+00",
+      "n_categories": 42,
+      "dominant": "electronics and communication engineering",
+      "dominant_pct": 22.3
+    },
+    {
+      "feature": "CollegeState",
+      "chi2": 4802.3,
+      "p_value": "0.0000e+00",
+      "n_categories": 26,
+      "dominant": "Uttar Pradesh",
+      "dominant_pct": 23.3
+    }
+  ],
+  "anova_results": [
+    {
+      "factor": "Gender",
+      "f_stat": 4.548,
+      "p_value": "0.033034",
+      "eta_squared": 0.0015,
+      "significant": "True",
+      "n_groups": 2
+    },
+    {
+      "factor": "DegreeType",
+      "f_stat": 2.013,
+      "p_value": "0.133748",
+      "eta_squared": 0.0013,
+      "significant": "False",
+      "n_groups": 3
+    },
+    {
+      "factor": "MajorSpecialization",
+      "f_stat": 5.358,
+      "p_value": "1.6976e-12",
+      "eta_squared": 0.0317,
+      "significant": "True",
+      "n_groups": 19
+    },
+    {
+      "factor": "CollegeState",
+      "f_stat": 2.125,
+      "p_value": "0.003060",
+      "eta_squared": 0.0134,
+      "significant": "True",
+      "n_groups": 20
+    },
+    {
+      "factor": "IndustryDomain",
+      "f_stat": 3.412,
+      "p_value": "8.6372e-25",
+      "eta_squared": 0.1033,
+      "significant": "True",
+      "n_groups": 96
+    }
+  ],
+  "rf_mae_log": 0.3448,
+  "rf_rmse_log": 0.4488,
+  "rf_r2": 0.2572,
+  "rf_mae_actual": 96799.32,
+  "rf_mape": 37.9,
+  "rf_cv_scores": [
+    0.19,
+    0.251,
+    0.2795,
+    0.2414,
+    0.2695
+  ],
+  "rf_cv_mean": 0.2463,
+  "rf_cv_std": 0.0312,
+  "rf_top_features": [
+    {
+      "Feature": "CognitiveScore",
+      "Importance": 0.1267374958952522
+    },
+    {
+      "Feature": "QuantitativeAptitudeScore",
+      "Importance": 0.06424876163297906
+    },
+    {
+      "Feature": "HighSchool10thPercentage",
+      "Importance": 0.059684495092912154
+    },
+    {
+      "Feature": "GraduationYear",
+      "Importance": 0.05770580031234579
+    },
+    {
+      "Feature": "TechInteraction",
+      "Importance": 0.05459463299807714
+    },
+    {
+      "Feature": "HighSchool12thPercentage",
+      "Importance": 0.05134967123210924
+    },
+    {
+      "Feature": "AcademicStrength",
+      "Importance": 0.04588827765894935
+    },
+    {
+      "Feature": "nueroticismScore",
+      "Importance": 0.03610033889759713
+    },
+    {
+      "Feature": "collegeGPA",
+      "Importance": 0.034603331996179036
+    },
+    {
+      "Feature": "EnglishScore",
+      "Importance": 0.0345609897996538
+    },
+    {
+      "Feature": "extraversionScore",
+      "Importance": 0.03441904427537912
+    },
+    {
+      "Feature": "IndustryDomain",
+      "Importance": 0.033106352918979176
+    },
+    {
+      "Feature": "conscientiousnessScore",
+      "Importance": 0.03222208972970519
+    },
+    {
+      "Feature": "LogicalReasoningScore",
+      "Importance": 0.032130642895237566
+    },
+    {
+      "Feature": "openess_to_experienceScore",
+      "Importance": 0.03006499121920924
+    }
+  ],
+  "xgb_r2": 0.2398,
+  "xgb_rmse": 0.454,
+  "xgb_mae_log": 0.3415,
+  "xgb_mae_actual": 95564.79,
+  "xgb_mape": 37.96,
+  "xgb_cv_mean": 0.2546,
+  "xgb_cv_std": 0.0288,
+  "en_r2": 0.1956,
+  "en_rmse": 0.4671,
+  "en_mae_actual": 102899.21,
+  "en_mape": 40.17,
+  "en_cv_mean": -10.5774,
+  "en_cv_std": 21.514,
+  "lr_r2": 0.2028,
+  "lr_rmse": 0.465,
+  "lr_mae_actual": 101536.08,
+  "lr_mape": 39.91,
+  "lr_cv_mean": -18.6126,
+  "lr_cv_std": 37.5536,
+  "tier_ttest_t": 6.471,
+  "tier_ttest_p": "5.4858e-10",
+  "tier_cohen_d": 0.5299,
+  "n_jobs": 30000,
+  "top_skills": {
+    "Communication": 13249,
+    "Agile": 3825,
+    "Leadership": 3501,
+    "SQL": 3376,
+    "Excel": 3316,
+    "Java": 3151,
+    "JavaScript": 2408,
+    "Python": 2200,
+    "Project Management": 1757,
+    "CSS": 1738,
+    "HTML": 1723,
+    "AWS": 1595,
+    "Linux": 1458,
+    "Git": 1393,
+    "Azure": 1304,
+    "SAP": 1278,
+    "Angular": 1178,
+    "Scrum": 1140,
+    "R": 1100,
+    "React": 1035
+  },
+  "chi2_skills_jobtype": [
+    {
+      "skill": "Communication",
+      "chi2": 428.3,
+      "p_value": "7.6655e-35",
+      "significant": "True"
+    },
+    {
+      "skill": "Agile",
+      "chi2": 613.6,
+      "p_value": "1.5983e-65",
+      "significant": "True"
+    },
+    {
+      "skill": "Leadership",
+      "chi2": 488.0,
+      "p_value": "2.4237e-44",
+      "significant": "True"
+    },
+    {
+      "skill": "SQL",
+      "chi2": 458.2,
+      "p_value": "1.5219e-39",
+      "significant": "True"
+    },
+    {
+      "skill": "Excel",
+      "chi2": 214.0,
+      "p_value": "1.2384e-06",
+      "significant": "True"
+    },
+    {
+      "skill": "Java",
+      "chi2": 401.3,
+      "p_value": "1.0286e-30",
+      "significant": "True"
+    },
+    {
+      "skill": "JavaScript",
+      "chi2": 220.2,
+      "p_value": "3.1752e-07",
+      "significant": "True"
+    },
+    {
+      "skill": "Python",
+      "chi2": 276.4,
+      "p_value": "1.8775e-13",
+      "significant": "True"
+    },
+    {
+      "skill": "Project Management",
+      "chi2": 260.1,
+      "p_value": "1.6209e-11",
+      "significant": "True"
+    },
+    {
+      "skill": "CSS",
+      "chi2": 184.0,
+      "p_value": "4.7149e-04",
+      "significant": "True"
+    }
+  ],
+  "graduate_skill_means": {
+    "Programming": 351.87,
+    "Quantitative": 514.14,
+    "Logical Reasoning": 500.43,
+    "English": 501.07,
+    "College GPA": 71.51
+  },
+  "gender_ttest_t": 2.29,
+  "gender_ttest_p": "2.2165e-02",
+  "gender_cohen_d": 0.0945,
+  "gender_male_mean": 309804.56,
+  "gender_female_mean": 290418.99
+}
